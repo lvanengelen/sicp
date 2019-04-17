@@ -109,3 +109,10 @@ which evaluates to
 ```
 0
 ```
+
+# Exercise 1.6
+
+The third operand of the `new-if` procedure will be evaluated before calling the
+procedure itself.  This triggers another evalution of `sqrt-iter`, which in turn
+evaluates the third operand of `new-if`, etc.  This causes unlimited recursion,
+Scheme's version of an endless loop.  So the program will hang indefinately.
