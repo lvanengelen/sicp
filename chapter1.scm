@@ -19,3 +19,17 @@
   (cond ((and (< z x) (< z y)) (sum-of-squares x y))
         ((and (< y x) (< y z)) (sum-of-squares x z))
         ((and (< x y) (< x z)) (sum-of-squares y z))))
+
+; Exercise 1.7
+(define (sqrt x)
+  (define (sqrt-iter guess previous-guess x)
+    (if (good-enough? guess previous-guess)
+        guess
+        (sqrt-iter (improve guess x) guess x)))
+  (define (good-enough? guess previous-guess)
+    (< (abs (/ (- guess previous-guess) guess)) 0.001))
+  (define (improve guess x)
+    (average guess (/ x guess)))
+  (define (average x y)
+    (/ (+ x y) 2))
+  (sqrt-iter 1.0 2.0 x))

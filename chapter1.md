@@ -116,3 +116,27 @@ The third operand of the `new-if` procedure will be evaluated before calling the
 procedure itself.  This triggers another evalution of `sqrt-iter`, which in turn
 evaluates the third operand of `new-if`, etc.  This causes unlimited recursion,
 Scheme's version of an endless loop.  So the program will hang indefinately.
+
+# Exercise 1.7
+
+The procedure `good-enough?` will accept the guess whenever the guess lies
+between `(sqrt (- x 0.001))` and `(sqrt (+ x 0.001))`.  When `x` is very small,
+the tolerance will dominate the equation of this accepted range and `x` is not
+part of the acceptance decision anymore.  The guess will be accepted when it is
+close enough to `(sqrt 0.001)`.
+
+E.g. `(sqrt 0)` evaluates to `0.03125`.  Interestingly, evaluating
+`(square (sqrt 0))` evaluates to `0.0009765625` which is indeed very close to
+the tolerance `0.001`.
+
+The procedure `good-enough?` will not accept the guess while its square is not
+closer than `0.001` from `x`.  High numbers might not be representable with a
+preciesion of `0.001`, so the guess will never be accepted.
+
+E.g. evaluating `(sqrt 1e13)` hangs, while `(sqrt 1e12)` evaluates to `1e6`.
+
+Note that in the improved version `(sqrt 0)` will hang.  This is because for `0`
+the next guess will always be half the previous guess and therefore the change
+will always be equal to the guess.  This means that this fraction will always be
+`1`, which is greater than the chosen tolerance of `0.001`.  Note that
+`(sqrt 1e-323)` can still be evaluated but `(sqrt 1e-324)` also hangs.
